@@ -4,7 +4,6 @@ Web programming school project. Hackerfill is a platform that provides a collect
 
 ## General info
 This project was developed for a school project at Eastern Piedmont University during the web programming course.
-adding resources
 
 ## Technologies
 Project includes:
