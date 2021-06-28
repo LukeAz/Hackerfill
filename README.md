@@ -81,3 +81,5 @@ Certificates for authentication by JWT and for HTTPS are already in place.
 | gianluca | Hackerfill_00  | advertiser  |
 | virgilio | Hackerfill_00  | reader  |
 | luigi | Hackerfill_00  | reader  |
+
+![alt profile](https://github.com/LukeAz/Hackerfill/blob/main/docs/profile.png?raw=true)
