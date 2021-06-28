@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="stylesheet" href="/css/icons.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="<%=csrfToken%>">
+    <meta name="description" content="Private Profile Page">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <div>
+      <%- include('includes/navbar.ejs'); -%>
+          
+      <!-- user card-->
+      <div class="custom-center-div">
+        <div class="card my-5 bg-customblue p-3">
+          <div class="card-header"><h2>USER AREA</h2></div>
+          <div class="card-body row">
+            <div class="col-auto me-3 d-none d-lg-block">
+              <img class="img-fluid rounded float-start" width="200px" src="<%=params.user.imageprofile%>" onerror="this.src='/img/profile/profile.png'">
+            </div>
+            <div class="col">
+              <div id="personalArea">
+                <h3 class="card-title">Welcome to your personal area:</h3>
+                <ul class="list-group mt-3 mb-3">
+                  <li class="list-group-item bg-bodybackgound colorlight">Username: <%= params.user.username %></li>
+                  <li class="list-group-item bg-bodybackgound colorlight">Email: <%= params.user.email %></li>
+                  <li class="list-group-item bg-bodybackgound colorlight">Role: <%= params.user.role %></li>
+                  <li class="list-group-item bg-bodybackgound colorlight">Name: <%= params.user.name %></li>
+                  <li class="list-group-item bg-bodybackgound colorlight">Surname: <%= params.user.surname %></li>
+                  <li class="list-group-item bg-bodybackgound colorlight">Biografy: <%= params.user.biografy %></li>
+                </ul>
+              </div>
+              <!-- edit account-->
+              <button type="button" class="btn btn-outline-primary me-2 mb-3" data-bs-toggle="modal" data-bs-target="#editAccount">Modify account</button>
+              <div class="modal fade" id="editAccount" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content bg-customblue">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Change account details</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="javascript:void(0);" id="editProfile" onsubmit="sendXhrForm('editProfile', 'editProfileFailed', '/profile/edit/data', '/profile');">
+                        <div class="card p-3 bg-customblue">
+                          <div class="card-header font-weight-bold text-center"><h5>You are changing your account information.</h5></div>
+                          <div class="card-body text-center">
+                            <div id="editProfileFailed" class="alert alert-danger d-none" role="alert"></div>
+                            <div class="row my-3">
+                              <label class="colorlight mb-3">Enter your first and last name:</label>
+                              <div class="input-group col">
+                                <div id="pencilbox" class="input-group-text boxcustom"></div>
+                                <input type="text" name="name" class="form-control" placeholder="Name" value="<%=params.user.name%>" required>
+                              </div>
+                              <div class="input-group col">
+                                <div id="penbox" class="input-group-text boxcustom"></div>
+                                <input type="text" name="surname" class="form-control" placeholder="Surname" value="<%=params.user.surname%>" required>
+                              </div>
+                            </div>
+                            <label class="colorlight">Email:</label>
+                            <div class="input-group my-3">
+                              <div id="emailbox" class="input-group-text boxcustom"></div>
+                              <input type="text" name="email" class="form-control" placeholder="Email" value="<%=params.user.email%>" required>
+                            </div>
+                            <label class="colorlight">Profile image:</label>
+                            <div class="input-group my-3">
+                              <div id="picturebox" class="input-group-text boxcustom"></div>
+                              <input class="form-control" type="text" name="imageprofile" placeholder="Url image" value="<%=params.user.imageprofile%>"></input>
+                            </div>
+                            <label class="colorlight">Biografy:</label>
+                            <div class="input-group my-3"><textarea type="text" name="biografy" class="form-control" placeholder="Biografy" ><%=params.user.biografy%></textarea></div>
+                            <label class="my-3">By clicking 'Submit', your account will be modified.</label>
+                            <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary shadow">Submit</button></div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
+                  </div>
+                </div>
+              </div>
+              <!-- edit account-->
+              <!-- edit password-->
+              <button type="button" class="btn btn-outline-primary me-2 mb-3" data-bs-toggle="modal" data-bs-target="#editPassword">Change password</button>
+              <div class="modal fade" id="editPassword" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                   <div class="modal-content bg-customblue">
+                     <div class="modal-header">
+                       <h5 class="modal-title" id="exampleModalLabel">Changing account password</h5>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                     </div>
+                     <div class="modal-body">
+                       <form action="javascript:void(0);" id="editPasswordForm" onsubmit="sendXhrForm('editPasswordForm', 'editPasswordFailed', '/profile/edit/password', '/profile');">
+                         <div class="card p-3 bg-customblue">
+                           <div class="card-header font-weight-bold text-center"><h5>You are changing your account password!</h5></div>
+                           <div class="card-body text-center">
+                            <label class="colorlight">Enter your old password and new password in the fields below.</label>
+                            <div id="editPasswordFailed" class="alert alert-danger d-none mt-3" role="alert"></div>
+                            <div class="input-group my-3">
+                              <div id="passwordbox" class="input-group-text boxcustom"></div>
+                              <input type="password" name="passwordOld" class="form-control" placeholder="Old Password" required>
+                            </div>
+                            <div class="input-group mb-3">
+                              <div id="passwordbox" class="input-group-text boxcustom"></div>
+                              <input type="password" name="password" class="form-control" placeholder="New Password" required>
+                            </div>
+                            <div class="input-group">
+                              <div id="passwordbox" class="input-group-text boxcustom"></div>
+                              <input type="password" name="passwordCheck" class="form-control" placeholder="Confirm new password" required>
+                            </div>
+                             <label class="my-3">By clicking 'Submit', your account password will be modified.</label>
+                             <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary shadow">Submit</button></div>
+                           </div>
+                         </div>
+                       </form>
+                     </div>
+                     <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
+                  </div>
+                </div>
+              </div>
+              <!-- edit password-->
+              <!-- delete account-->
+              <button type="button" class="btn btn-outline-danger me-2 mb-3" data-bs-toggle="modal" data-bs-target="#deleteAccount">Delete account</button>
+              <div class="modal fade" id="deleteAccount" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content bg-customblue">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Delete account</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="alert alert-danger" role="alert">
+                        <p>Are you sure to delete the account?</p>
+                        <p>All published articles and related reviews will be deleted.</p>
+                      </div>
+                      <div class="form-check">
+                        <input id="checkDeleteAccount" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="disabledDeleteAccountToggle()">
+                        <label class="form-check-label" for="flexCheckChecked">Delete account</label>
+                      </div>
+                      <div class="form-check">
+                        <input id="checkDeleteArticles" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="disabledDeleteAccountToggle()">
+                        <label class="form-check-label" for="flexCheckChecked">Delete all articles</label>
+                      </div>
+                      <div class="form-check">
+                        <input id="checkDeleteReviews" class="form-check-input" type="checkbox" value="" id="flexCheckChecked" onclick="disabledDeleteAccountToggle()">
+                        <label class="form-check-label" for="flexCheckChecked">Delete all reviews</label>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <form method="POST" action="/profile/delete">
+                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                        <button id="deleteButton" type="submit" class="btn btn btn-danger disabled">Delete account</button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- delete account-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- user card-->
+    </div>
+    <%- include('includes/footer.html'); -%>
+    <%- include('includes/cookie.html'); -%>
+  </body>
+  <script src="/js/utility.js"></script>
+</html>

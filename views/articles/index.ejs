@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Page to view the list of articles">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <div>
+      <%- include('../includes/navbar.ejs'); -%>
+
+      <!-- dashboard image-->
+      <div id="dashboardimg">
+        <h1 class="max-width-500px colorgreen text-center display-1 mx-auto p-5">A Massive Hacking Container</h1>
+      </div>
+      <!-- dashboard image-->
+
+      <!-- articles -->
+      <div class="custom-center-div">
+        <div class="my-5">
+          <h1 class="pb-2 border-bottom">What article are you looking for?</h1>
+          <!-- search form-->
+          <a class="btn btn-outline-success mt-3 me-2" data-bs-toggle="collapse" href="#collapseSearch" role="button" aria-expanded="false" aria-controls="collapseSearch">Search filters</a>
+          <a class="btn btn-outline-success mt-3 me-2" href="/articles">Remove filters</a>
+          <div class="collapse multi-collapse mt-3" id="collapseSearch">
+            <div class="card bg-customblue">
+              <div class="card-body">
+                <p class="lead">Empty fields will be ignored in the search.</p>
+                <form class="" method="GET" action="/articles">
+                  <label class="colorlight">Username filter:</label>
+                  <div class="input-group my-3"><input class="form-control" id="autoSizingInputGroup" type="text" name="username" placeholder="A piece of the username" value="<%=params.query.username%>"></input></div>
+                  <label class="colorlight">Title filter:</label><div class="input-group my-3"><input class="form-control" id="autoSizingInputGroup" type="text" name="title" placeholder="A piece of the title" value="<%=params.query.title%>"></input></div>
+                  <label class="colorlight">Description filter:</label>
+                  <div class="input-group my-3"><textarea type="text" name="description" class="form-control" id="autoSizingInputGroup" placeholder="A piece of the description" value="<%=params.query.description%>"></textarea></div>
+                  <label class="colorlight">Text filter:</label>
+                  <div class="input-group my-3"><textarea type="text" name="text" class="form-control" id="autoSizingInputGroup" placeholder="A piece of the text" value="<%=params.query.text%>"></textarea></div>
+                  <label class="colorlight">Category filter:</label>
+                  <div class="d-flex">
+                    <select name="category" class="form-control me-4 mt-3">
+                      <option value="">Empty</option>
+                      <% for(let i in params.categorys) { %>
+                        <option value="<%=params.categorys[i].name%>" <%if(params.query.category == params.categorys[i].name) {%> selected="selected" <% } %> ><%=params.categorys[i].name%></option>
+                      <% } %>
+                    </select>
+                    <button class="btn btn-outline-success mt-3" type="submit">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- search form-->
+          <hr class="my-4">
+        </div>
+        <% if(params.logged && params.user.role == 'advertiser') { %>
+          <div class="my-4">
+            <h1 class="display-6">Hi, would you like to write your own article?</h1>
+            <p class="lead colorlight">Is simple, you make a contribution to our community. Click the button below for more information.</p>
+            <a class="btn btn-outline-primary btn-lg me-2 mb-3" href="/articles/new" role="button">Write now</a>
+            <a class="btn btn-outline-primary btn-lg me-2 mb-3" href="/articles" role="button">All articles</a>
+            <a class="btn btn-outline-primary btn-lg me-2 mb-3" href="/articles?unique=true&username=<%=params.user.username%>" role="button">My articles</a>
+            <hr class="my-4">
+          </div>
+        <% }
+          if(params.articles.length == 0) { %>
+            <div class="alert alert-dark" role="alert">
+              No results were found!
+            </div>
+          <% }
+          for(let x in params.articles) {%>
+          <div class="card bg-customblue my-5 p-3">
+            <div class="card-title text-center mt-2">
+              <p class="fs-3 colorgreen"><%=params.articles[x].title%></p>
+              <hr class="mt-4">
+            </div>
+            <div class="card-body">
+              <p class="badge bg-secondary fs-5">TAG: <i><%=params.articles[x].categoryid%></i></p>
+              <div class="row">
+                <div class="col-3 d-none d-lg-block max-width-300px">
+                  <img class="img-fluid rounded float-start" src="<%=params.articles[x].imagearticle%>" onerror="this.src='/img/article/article.png'" alt="profile">
+                </div>
+                <div class="col">
+                  <p class="card-text my-3"><%=params.articles[x].description%></p>
+                  <a href="/articles/<%=params.articles[x].articlesid%>" class="btn btn-outline-primary me-2 mb-3">View the content</a>
+                  <% if(params.logged && params.articles[x].advertiserid == params.user.username) { %>
+                    <a href="/articles/upload/<%=params.articles[x].articlesid%>" class="btn btn-outline-primary me-2 mb-3">Upload material</a>
+                    <!-- edit content-->
+                    <button type="button" class="btn btn-outline-primary me-2 mb-3" data-bs-toggle="modal" data-bs-target="#editArticle_<%=params.articles[x].articlesid%>">Edit the content</button>
+                    <div class="modal fade" id="editArticle_<%=params.articles[x].articlesid%>" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content bg-customblue">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit content</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body"><p>Are you sure to edit the content?</p></div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="/articles/edit/<%=params.articles[x].articlesid%>" class="btn btn-warning">Edit the content</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- edit content-->
+                    <!-- delete article-->
+                    <button type="button" class="btn btn-outline-danger me-2 mb-3" data-bs-toggle="modal" data-bs-target="#deleteArticle_<%=params.articles[x].articlesid%>">Delete article</button>
+                    <div class="modal fade" id="deleteArticle_<%=params.articles[x].articlesid%>" tabindex="-1" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content bg-customblue">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete article</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body"><p>Are you sure to delete the article?</p></div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <form method="POST" action="/articles/delete/<%=params.articles[x].articlesid%>">
+                              <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                              <button id="deleteButton" type="submit" class="btn btn btn-danger">Delete article</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- delete article-->
+                  <% } %>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer text-center">
+              <hr class="mt-2">
+              <p class="text-muted">Written by <%=params.articles[x].advertiserid%></p>
+            </div>
+          </div>
+        <% } %>
+        <div class="text-center mb-5">
+          <div class="btn-group">
+            <%
+              let query = '';
+              delete params.query.page;
+              for(let i in params.query)
+                query += `${i}=${params.query[i]}&`;
+            %>
+            <a class="btn btn-outline-secondary rounded-3 <% if(params.pa == 1 || params.pa > params.np) { %> disabled <% } %> me-1" href="/articles?<%=query%>page=<%=params.pa - 1%>">< Previous</a>
+            <a class="btn btn-outline-secondary rounded-3 <% if(params.pa == 1) { %> active <% } %> me-1" href="/articles?<%=query%>page=1">1</a>
+            <%  let maxteoric = ((params.pa == 1) ? 4 : params.pa + 2);
+                for (let i = (params.pa == 1) ? 2 : params.pa; i <= maxteoric && i <= params.np; i++) { %>
+                  <a class="btn btn-outline-secondary rounded-3 <% if(params.pa == i) { %> active <% } %> me-1" href="/articles?<%=query%>page=<%=i%>"><%=i%></a>
+            <%  } 
+                if(params.np - maxteoric > 0) { %>
+                  <a class="btn btn-outline-secondary rounded-3 disabled me-1" href="#">...</a>
+                <%let next = (Math.trunc((maxteoric) / 20) + 1) * 20;
+                  if(next > params.np) next = params.np %>
+                  <a class="btn btn-outline-secondary rounded-3 me-1" href="/articles?<%=query%>page=<%=next%>"><%=next%></a>                
+                <%  } %>
+            <a class="btn btn-outline-secondary rounded-3 <% if(params.pa >= params.np) { %> disabled <% } %> me-1" href="/articles?<%=query%>page=<%=Number(params.pa) + 1%>">Next ></a>  
+          </div>
+        </div>
+      </div>
+      <!-- articles -->
+    </div>
+  
+    <%- include('../includes/footer.html'); -%>
+    <%- include('../includes/cookie.html'); -%>
+  </body>
+</html>

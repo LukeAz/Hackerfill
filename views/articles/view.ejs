@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="stylesheet" href="/css/editormd.preview.css">
+    <link rel="stylesheet" href="/css/views.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%if(params.logged) {%><meta name="csrf-token" content="<%=csrfToken%>"><% }%>
+    <meta name="description" content="Page that displays an article">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <div>
+      <%- include('../includes/navbar.ejs'); -%>
+
+      <div class="custom-center-div my-5">
+        <div class="container bg-customblue p-4 rounded">
+          <a href="/articles" class="btn btn-outline-primary me-2 mb-3">Back to articles</a>
+          <% if(params.logged && params.article.advertiserid == params.user.username) { %>
+            <a href="/articles/upload/<%=params.article.articlesid%>" class="btn btn-outline-primary me-2 mb-3">Upload material</a>
+            <!-- edit content-->
+            <button type="button" class="btn btn-outline-primary me-2 mb-3" data-bs-toggle="modal" data-bs-target="#editArticle">Edit the content</button>
+            <div class="modal fade" id="editArticle" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content bg-customblue">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit article</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body"><p>Are you sure to edit the content?</p></div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <a href="/articles/edit/<%=params.article.articlesid%>" class="btn btn-warning">Edit the content</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- edit content-->
+            <!-- delete article-->
+            <button type="button" class="btn btn-outline-danger me-2 mb-3" data-bs-toggle="modal" data-bs-target="#deleteArticle">Delete article</button>
+            <div class="modal fade" id="deleteArticle" tabindex="-1" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content bg-customblue">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete article</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body"><p>Are you sure to delete the article?</p></div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form method="POST" action="/articles/delete/<%=params.article.articlesid%>">
+                      <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                      <button id="deleteButton" type="submit" class="btn btn-danger">Delete article</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- delete article-->
+          <% } %>
+          <hr class="mb-4">
+          <h1 class="display-5 text-center colorgreen"><%=params.article.title%></h1>
+          <hr class="my-4">
+          <p class="fs-4 text-center colorlight"><%=params.article.description%></p>
+          <hr class="my-4">
+          <div id="editormd-view" class="my-2">
+            <textarea class="d-none" name="editormd-markdown-doc"><%= params.article.markdown%></textarea>
+          </div>
+          <hr class="my-4">
+          <div id="materials">
+            <h1 class="display-5 text-center">Material:</h1>
+            <hr class="my-4">
+            <% if(params.logged) { 
+                for(let i in params.materials) { %>
+                  <div>
+                    <% if(params.user.username == params.article.advertiserid) { %>
+                      <!-- delete material-->
+                      <button type="button" class="btn btn-outline-danger me-5 mb-3" data-bs-toggle="modal" data-bs-target="#deleteMaterial_<%=params.materials[i].materialid%>">Delete</button>
+                      <div class="modal fade" id="deleteMaterial_<%=params.materials[i].materialid%>" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content bg-customblue">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Delete material</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Are you sure to delete this material?</p>
+                              <p><%= params.materials[i].filepath %></p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <form method="POST" action="/articles/material/delete/<%=params.materials[i].materialid%>">
+                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                <button id="deleteButton" type="submit" class="btn btn-danger">Delete</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- delete material-->
+                    <% } %>
+                    <a class="btn btn-outline-success me-2 mb-3" href="/articles/material/<%=params.materials[i].materialid%>" target="_blank" role="button"><%=params.materials[i].filepath%></a>
+                    <% if (params.materials[i].virustotalurl != null) { %>
+                    <a class="btn btn-outline-warning me-2 mb-3" href="<%=params.materials[i].virustotalurl%>" target="_blank" role="button">Virustotal Checksum</a>
+                    <% } %>
+                  </div>
+              <% } %>
+            <% } else { %>
+              <div class="alert alert-warning" role="alert">Please login to see the material.</div>
+            <% } %>
+          </div>
+          <hr class="my-4">
+          <h1 class="display-5 text-center">Reviews:</h1>
+          <hr class="my-4">
+          <% if(!params.logged) { %>
+            <div class="alert alert-warning" role="alert">Please login to write a review.</div>
+          <% }%>
+          <% if(params.logged && params.user.username != params.article.advertiserid) { %>
+            <% if(params.reviews.filter(rev => rev.username == params.user.username).length == 0) { %>
+              <!-- new reviews-->
+              <button type="button" class="btn btn-outline-primary me-2 mb-3" data-bs-toggle="modal" data-bs-target="#newReview">Write review</button>
+              <div class="modal fade" id="newReview" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content bg-customblue">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">New review</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form id="newReviewForm" onsubmit="sendXhrForm('newReviewForm', 'newReviewFormFailed', '/articles/review/new/<%=params.article.articlesid%>', '/articles/<%=params.article.articlesid%>');" action="javascript:void(0);">
+                        <div class="card p-3 bg-customblue">
+                          <div class="card-header font-weight-bold text-center"><h5>You are writing an review!</h5></div>
+                          <div class="card-body mt-3 text-center">
+                            <div id="newReviewFormFailed" class="alert alert-danger d-none" role="alert"></div>
+                            <label>Title:</label>
+                            <div class="input-group my-3"><textarea type="text" name="title" class="form-control" id="autoSizingInputGroup" placeholder="Title"></textarea></div>
+                            <label>Text:</label>
+                            <div class="input-group my-3"><textarea type="text" name="text" class="form-control" id="autoSizingInputGroup" placeholder="Description"></textarea></div>
+                            <label>Stars:</label>
+                            <div class="input-group my-3">
+                              <select name="stars" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                              </select>
+                            </div>
+                            <label class="my-3">By clicking 'Submit', the review will be created.</label>
+                            <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary shadow">Submit</button></div>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
+                  </div>
+                </div>
+              </div>
+              <!-- new reviews-->
+            <% } %>
+            <a href="/articles/<%=params.article.articlesid%>?review=my" class="btn btn-outline-primary me-2 mb-3">My review</a>
+            <a href="/articles/<%=params.article.articlesid%>" class="btn btn-outline-primary me-2 mb-3">All review</a>
+          <% } %>
+          <% for(let i in params.reviews) { %>
+            <div class="card my-3 bg-bodybackgound border-light">
+              <div class="card-header"><%=params.reviews[i].title%></div>
+              <div class="card-body">
+                <p class="fs-4 card-title colorgreen">Stars: <% for(let y=0; y < params.reviews[i].stars; y++) { %> &#9733; <% } %></p>
+                <p class="card-text"><%=params.reviews[i].text%></p>
+                <% if(params.logged && params.user.username == params.reviews[i].username) { %>
+                  <!-- edit reviews-->
+                  <button type="button" class="btn btn-outline-primary me-2 mb-3" data-bs-toggle="modal" data-bs-target="#editReview">Edit review</button>
+                  <div class="modal fade" id="editReview" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content bg-customblue">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Edit review</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form id="editReviewForm" onsubmit="sendXhrForm('editReviewForm', 'editReviewFormFailed', '/articles/review/edit/<%=params.article.articlesid%>', '/articles/<%=params.article.articlesid%>');" action="javascript:void(0);">
+                            <div class="card p-3 bg-customblue">
+                              <div class="card-header font-weight-bold text-center"><h5>You are editing the review!</h5></div>
+                              <div class="card-body mt-3 text-center">
+                                <div id="editReviewFormFailed" class="alert alert-danger d-none" role="alert"></div>
+                                <label>Title:</label>
+                                <div class="input-group my-3"><textarea type="text" name="title" class="form-control" id="autoSizingInputGroup" placeholder="Title" required><%=params.reviews[i].title%></textarea></div>
+                                <label>Text:</label>
+                                <div class="input-group my-3"><textarea type="text" name="text" class="form-control" id="autoSizingInputGroup" placeholder="Text" required><%=params.reviews[i].text%></textarea></div>
+                                <label>Stars:</label>
+                                <div class="input-group my-3">
+                                  <select name="stars" class="form-control" required>
+                                    <option value="" selected>Empty</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                  </select>
+                                </div>
+                                <label class="my-3">By clicking 'Submit', the review will be modified.</label>
+                                <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary shadow">Submit</button></div>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- edit reviews-->
+                  <!-- delete reviews-->
+                  <button type="button" class="btn btn-outline-danger me-2 mb-3" data-bs-toggle="modal" data-bs-target="#deleteReview">Delete review</button>
+                  <div class="modal fade" id="deleteReview" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content bg-customblue">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Delete review</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body"><p>Are you sure to delete the reviews?</p></div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <form method="POST" action="/articles/review/delete/<%=params.article.articlesid%>">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <button id="deleteButton" type="submit" class="btn btn-danger">Delete review</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- delete reviews-->
+                <% } %>
+              </div>
+              <div class="card-footer text-muted">Written by <%= params.reviews[i].username %></div>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../includes/footer.html'); -%>
+    <%- include('../includes/cookie.html'); -%>
+  </body>
+  <script src="/js/jquery.min.js"></script>
+
+  <script src="/js/Markdown/lib/marked.min.js"></script>
+  <script src="/js/Markdown/lib/prettify.min.js"></script> 
+  <script src="/js/Markdown/lib/underscore.min.js"></script>
+  <script src="/js/Markdown/lib/flowchart.min.js"></script>
+  <script src="/js/Markdown/lib/jquery.flowchart.min.js"></script>
+
+  <script src="/js/DOMPurify/purify.js"></script>
+  <script src="/js/Markdown/editormd.js"></script>
+  <script src="/js/Markdown/markdownViewer.js"></script>
+
+  <script src="/js/utility.js"></script>
+</html>

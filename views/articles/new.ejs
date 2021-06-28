@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="<%=csrfToken%>">
+    <meta name="description" content="Page for writing a new article">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <%- include('../includes/navbar.ejs'); -%>
+        
+    <div>
+      <div class="custom-center-div">
+        <form id="newArticleForm" class="my-5" onsubmit="sendXhrForm('newArticleForm', 'newArticleFailed', '/articles/new', '/articles');" action="javascript:void(0);">
+          <div class="card p-3 bg-customblue">
+            <div class="col">
+              <a href="/" class="btn btn-outline-primary me-2 mb-3">Back to home</a>
+              <a href="/articles" class="btn btn-outline-primary me-2 mb-3">Back to articles</a>
+            </div>
+            <div class="card-header font-weight-bold text-center"><h5>You are writing an article!</h5></div>
+            <div class="card-body text-center">
+              <div id="newArticleFailed" class="alert alert-danger d-none" role="alert"></div>
+              <label class="colorlight">Title</label>
+              <div class="input-group my-3"><textarea type="text" name="title" class="form-control" placeholder="Title" required></textarea></div>
+              <label class="colorlight">Description</label>
+              <div class="input-group my-3"><textarea type="text" name="description" class="form-control" placeholder="Description" required></textarea></div>
+              <label class="colorlight">Image url: </label>
+              <div class="input-group my-3"><input class="form-control" type="text" name="image" placeholder="Url image"></input></div>
+              <label class="colorlight">Category: </label>
+              <div class="input-group my-3">
+                <select name="category" class="form-control">
+                  <% for(let i in params.category)  {%>
+                    <option value="<%= params.category[i].name %>"><%= params.category[i].name %></option>
+                  <% } %>
+                </select>
+              </div>
+              <div id="editor" class="mt-5">
+                <textarea id="editortext" name="markdown" hidden>### Hello Editor.md !</textarea>
+              </div>
+              <label class="my-3">By clicking 'Submit', will create the article, then it will be editable.</label>
+              <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary shadow">Submit</button></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <%- include('../includes/footer.html'); -%>
+    <%- include('../includes/cookie.html'); -%>
+  </body>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/DOMPurify/purify.js"></script>
+  <script src="/js/Markdown/editormd.js"></script>
+  <script src="/js/Markdown/markdownEditor.js"></script>
+  <script src="/js/utility.js"></script>
+</html>

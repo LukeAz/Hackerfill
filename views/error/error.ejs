@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+    <head>
+      <title>Hackerfill</title>
+      <link href="/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="/css/navbar.css">
+      <link rel="stylesheet" href="/css/utility.css">
+      <script src="/js/bootstrap.bundle.min.js"></script>
+      <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Error Page">
+    </head>
+
+    <body class="d-flex flex-column h-100">
+      <div>
+        <%- include('../includes/navbar.ejs'); -%>
+
+        <!-- error -->
+        <div class="custom-center-div">
+          <img src="/img/error.png" class="img-fluid rounded-2 mx-auto my-5 d-block" alt="...">
+          <div class="alert alert-danger my-5 text-center" role="alert">
+            <p>Error 403! </p>
+            <p>Technical details: <%= params.messages%></p>
+            <a href="/" class="btn btn-danger">Back to Homepage</a>
+          </div>
+        </div>
+        <!-- error -->
+      </div>
+      <%- include('../includes/footer.html'); -%>   
+      <%- include('../includes/cookie.html'); -%> 
+    </body>
+</html>

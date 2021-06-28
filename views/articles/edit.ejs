@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="<%=csrfToken%>">
+    <meta name="description" content="Page for editing an article">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <%- include('../includes/navbar.ejs'); -%>
+        
+    <div>
+      <div class="custom-center-div">
+        <form id="editArticleForm" class="my-5" onsubmit="sendXhrForm('editArticleForm', 'editArticleFailed', '/articles/edit/<%=params.article.articlesid%>', '/articles/<%=params.article.articlesid%>');" action="javascript:void(0);">
+          <div class="card p-3 bg-customblue">
+            <div class="col">
+              <a href="/" class="btn btn-outline-primary me-2 mb-3">Back to home</a>
+              <a href="/articles/<%=params.article.articlesid%>" class="btn btn-outline-primary me-2 mb-3">Back to article</a>
+            </div>
+            <div class="card-header font-weight-bold text-center"><h1>You are editing an article!</h1></div>
+            <div class="card-body text-center">
+              <hr class="mt-4">
+              <div id="editArticleFailed" class="alert alert-danger d-none" role="alert"></div>
+              <p class="text-danger">Pay close attention to the changes you make! </p>
+              <p class="colorlight">Title: <i><%=params.article.title%></i></p>
+              <p class="colorlight">Description: <i><%=params.article.description%></i></p>
+              <p class="colorlight">Category: <i><%=params.article.categoryid%></i></p>
+              <hr class="my-4">
+              <label>New Title</label>
+              <div class="input-group my-3"><textarea type="text" name="title" class="form-control" placeholder="Title" required><%=params.article.title%></textarea></div>
+              <label>New Description</label>
+              <div class="input-group my-3"><textarea type="text" name="description" class="form-control" placeholder="Description" required><%=params.article.description%></textarea></div>
+              <label>New image url: </label>
+              <div class="input-group my-3"><input class="form-control" type="text" name="image" placeholder="Url image" value="<%=params.article.imagearticle%>"></input></div>
+              <hr class="my-4">
+              <div id="editor"><textarea id="editortext" name="markdown" class="d-none"><%=params.article.markdown%></textarea></div>
+              <label class="my-3">By clicking 'Submit', the article will be modified.</label>
+              <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary shadow">Submit</button></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <%- include('../includes/footer.html'); -%>
+    <%- include('../includes/cookie.html'); -%>
+  </body>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/DOMPurify/purify.js"></script>
+  <script src="/js/Markdown/editormd.js"></script>
+  <script src="/js/Markdown/markdownEditor.js"></script>
+  <script src="/js/utility.js"></script>
+</html>

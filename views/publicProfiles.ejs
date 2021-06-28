@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Page with the list of public profiles">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <div>
+      <%- include('includes/navbar.ejs'); -%>
+
+      <!-- dashboard image-->
+      <div id="dashboardimg">
+        <h1 class="max-width-500px colorgreen text-center display-1 mx-auto p-5">A Massive Hacking Container</h1>
+      </div>
+      <!-- dashboard image-->
+
+      <!-- descr -->
+      <div class="custom-center-div my-5">
+        <div class="my-4">
+          <h1 class="pb-2 border-bottom">Who are you searching?</h1>
+          <!-- search form-->
+          <a class="btn btn-outline-success mt-3 me-2" data-bs-toggle="collapse" href="#collapseSearch" role="button" aria-expanded="false" aria-controls="collapseSearch">Search filters</a>
+          <a class="btn btn-outline-success mt-3 me-2" href="/public">Remove filters</a>
+          <div class="collapse multi-collapse mt-3" id="collapseSearch">
+            <div class="card bg-customblue">
+              <div class="card-body">
+                <p class="lead">Empty fields will be ignored in the search.</p>
+                <form class="" method="GET" action="/public">
+                  <label class="colorlight">Username filter:</label>
+                  <div class="input-group my-3"><input class="form-control" id="autoSizingInputGroup" type="text" name="username" placeholder="A piece of the username"></input></div>
+                  <div class="d-flex">
+                    <button class="btn btn-outline-success mt-3" type="submit">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- search form-->
+          <hr class="my-4">
+          <%if(params.publicProfile.length == 0) { %>
+            <div class="alert alert-dark" role="alert">
+              No results were found!
+            </div>
+          <% }
+           for(let x in params.publicProfile) {%>
+            <div class="card bg-customblue my-5">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3 d-none d-lg-block max-width-250px">
+                    <img class="img-fluid rounded float-start" src="<%=params.publicProfile[x].imageprofile%>" onerror="this.src='/img/profile/profile.png'">
+                  </div>
+                  <div class="col">
+                    <p class="card-text fs-2">Username: <i class="colorlight"><%=params.publicProfile[x].username%></i></p>
+                    <p class="card-text">Biografy: <i class="colorlight"><%=params.publicProfile[x].biografy%></i></p>
+                    <a class="btn btn-outline-primary btn-lg me-2 mb-3" href="/articles?unique=true&username=<%=params.publicProfile[x].username%>" role="button">View articles</a>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer text-muted"></div>
+            </div>
+          <% } %>
+        </div>
+        <div class="text-center mb-5">
+          <div class="btn-group">
+            <%
+              let query = '';
+              delete params.query.page;
+              for(let i in params.query)
+                query += `${i}=${params.query[i]}&`;
+            %>
+            <a class="btn btn-outline-secondary rounded-3 <% if(params.pa == 1 || params.pa > params.np) { %> disabled <% } %> me-1" href="/public?<%=query%>page=<%=params.pa - 1%>">< Previous</a>
+            <a class="btn btn-outline-secondary rounded-3 <% if(params.pa == 1) { %> active <% } %> me-1" href="/public?<%=query%>page=1">1</a>
+            <%  let maxteoric = ((params.pa == 1) ? 4 : params.pa + 2);
+                for (let i = (params.pa == 1) ? 2 : params.pa; i <= maxteoric && i <= params.np; i++) { %>
+                  <a class="btn btn-outline-secondary rounded-3 <% if(params.pa == i) { %> active <% } %> me-1" href="/public?<%=query%>page=<%=i%>"><%=i%></a>
+            <%  } 
+                if(params.np - maxteoric > 0) { %>
+                  <a class="btn btn-outline-secondary rounded-3 disabled me-1" href="#">...</a>
+                <%let next = (Math.trunc((maxteoric) / 20) + 1) * 20;
+                  if(next > params.np) next = params.np %>
+                  <a class="btn btn-outline-secondary rounded-3 me-1" href="/public?<%=query%>page=<%=next%>"><%=next%></a>                
+                <%  } %>
+            <a class="btn btn-outline-secondary rounded-3 <% if(params.pa >= params.np) { %> disabled <% } %> me-1" href="/public?<%=query%>page=<%=Number(params.pa) + 1%>">Next ></a>  
+          </div>
+        </div>
+      </div>
+      <!-- descr -->
+    </div>
+    <%- include('includes/footer.html'); -%>
+    <%- include('includes/cookie.html'); -%>
+  </body>
+</html>

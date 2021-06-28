@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="stylesheet" href="/css/editormd.min.css">
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="<%=csrfToken%>">
+    <meta name="description" content="Page for uploading material into articles">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <div>
+      <%- include('../includes/navbar.ejs'); -%>
+        
+      <div class="custom-center-div">
+        <form class="my-5" onsubmit="sendFiles('<%=params.article.articlesid%>')" action="javascript:void(0);">
+          <div class="card p-3 bg-customblue">
+            <div class="col">
+              <a href="/" class="btn btn-outline-primary mb-4">Back to home</a>
+              <a href="/articles/<%=params.article.articlesid%>" class="btn btn-outline-primary mb-4">Back to article</a>
+            </div>
+            <div class="card-header font-weight-bold text-center"><h1>Add material for the article.</h1></div>
+            <div class="card-body text-center">
+              <hr class="mt-4">
+              <div id="filesUploadFailed" class="alert alert-danger d-none" role="alert"></div>
+              <p class="text-danger">Please note, you cannot upload multiple files with the same name and the maximum size accepted is about 50MB.</p>
+              <p class="colorlight">TITLE: <i><%=params.article.title%></i></p>
+              <p class="colorlight">DESCRIPTION: <i><%=params.article.description%></i></p>
+              <p class="colorlight">CATEGORY: <i><%=params.article.categoryid%></i></p>
+              <p class="colorgreen">Uploaded files will be checked by VirusTotal</p>
+              <hr class="my-4">
+              <div class="mb-3">
+                <label class="form-label">Add material</label>
+                <input class="form-control" name="upload" type="file" id="formFile" multiple required>
+              </div>
+              <label class="my-3 colorlight">By clicking 'Submit', the article will be modified.</label>
+              <div class="d-grid gap-2"><button id="filesUploadButton" type="submit" class="btn btn-outline-primary shadow">Submit</button></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <%- include('../includes/footer.html'); -%>
+    <%- include('../includes/cookie.html'); -%>
+  </body>
+  <script src="/js/utility.js"></script>
+</html>

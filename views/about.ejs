@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="About Page">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <div>
+      <%- include('includes/navbar.ejs'); -%>
+      
+      <!-- dashboard image-->
+      <div id="dashboardimg">
+        <h1 class="max-width-500px colorgreen text-center display-1 mx-auto p-5">A Massive Hacking Container</h1>
+      </div>
+      <!-- dashboard image-->
+
+
+      <!-- descr -->
+      <div class="custom-center-div my-5">
+        <h1 class="pb-2 border-bottom">About page</h1>
+        <p class="fs-4 colorlight">This site was developed for a school project.</p>
+        <p class="fs-4 colorlight">The technologies used:</p>
+        <ul>
+          <li>Nodejs programming language</li>
+          <li>Express framework for the web server</li>
+          <li>JWT token for the authentication system</li>
+          <li>Server side rendering using ejs</li>
+          <li>Sqlite3 for database</li>
+          <li>Markdown editor for creating articles, editing and displaying them</li>
+          <li>Using DOMPurify to avoid xss when converting markdown to html</li>
+          <li>Using char.js for leaderboard</li>
+          <li>Using fontawesome for some icons</li>
+        </ul>
+        <hr class="my-3">
+        <p class="fs-4 colorlight">Explanation of site users</p>
+        <p>Guest can:</p>
+        <ul>
+          <li>See the leaderboard located on the homepage</li>
+          <li>Read articles</li>
+          <li>Read reviews</li>
+          <li>Use the search function to find accurate articles</li>
+        </ul>
+        <p>Guest can't:</p>
+        <ul>
+          <li>Writing reviews</li>
+          <li>View or download the materials attached to the article</li>
+        </ul>
+        <p>Reader can:</p>
+        <ul>
+          <li>Do everything the guest can</li>
+          <li>Edit profile, setting up a profile picture, or a public bio, or changing account information</li>
+          <li>Writing reviews</li>
+          <li>View or download the materials attached to the article</li>
+        </ul>
+        <p>Reader can't:</p>
+        <ul>
+          <li>Write articles</li>
+        </ul>
+        <p>Advertiser can:</p>
+        <ul>
+          <li>Do everything the reader can</li>
+          <li>Write articles</li>
+          <li>Upload material in article</li>
+          <li>Edit own articles</li>
+        </ul>
+        <p>Advertiser can't:</p>
+        <ul>
+          <li>Review own articles</li>
+        </ul>
+        <hr class="my-4">
+        <p class="fs-4 colorlight">Github</p>
+        <p>This project is opensource, and can be downloaded from the github at this link: <a href="https://github.com/LukeAz/Hackerfill" target="_blank" rel="noreferrer">Hackerfill</a></p>
+      </div>
+      <!-- descr -->
+    </div>
+    <%- include('includes/footer.html'); -%>
+    <%- include('includes/cookie.html'); -%>
+  </body>
+</html>

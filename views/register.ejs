@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">    
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="stylesheet" href="/css/icons.css">
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Register Page">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+    <%- include('includes/navbar.ejs'); -%>
+
+    <!-- register form -->
+    <form id="registerForm" class="text-center text-light my-5" onsubmit="sendXhrForm('registerForm', 'registerFailed', '/register', '/');" action="javascript:void(0);">
+      <div class="card p-4 mx-auto bg-customblue max-width-450px">
+        <div class="card-header text-center font-weight-bold">
+          <h5>Sign in to Hackerfill</h5>
+        </div>
+        <div class="card-body">
+          <div id="registerFailed" class="alert alert-danger d-none" role="alert"></div>
+          <div class="input-group my-3">
+            <div id="usernamebox" class="input-group-text boxcustom"></div>
+            <input type="text" name="username" class="form-control" placeholder="Username" required>
+          </div>
+          <div class="input-group">
+            <div id="emailbox" class="input-group-text boxcustom"></div>
+            <input type="text" name="email" class="form-control" placeholder="Email" required>
+          </div>
+          <div class="row my-3">
+            <p>Enter your first and last name</p>
+            <div class="input-group col">
+              <div id="pencilbox" class="input-group-text boxcustom"></div>
+              <input type="text" name="name" class="form-control" placeholder="Name" required>
+            </div>
+            <div class="input-group col">
+              <div id="penbox" class="input-group-text boxcustom"></div>
+              <input type="text" name="surname" class="form-control" placeholder="Surname" required>
+            </div>
+          </div>
+          <div class="input-group">
+            <div id="passwordbox" class="input-group-text boxcustom"></div>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+          </div>
+          <div class="input-group mt-3">
+            <div id="passwordbox" class="input-group-text boxcustom"></div>
+            <input type="password" name="passwordCheck" class="form-control" placeholder="Confirm password" required>
+          </div>
+          <div class="row my-3">
+            <label>Role: </label>
+            <div class="input-group mt-4">
+              <div id="rolebox" class="input-group-text boxcustom"></div>
+              <select name="role" class="form-control">
+                <option value="advertiser">Advertiser</option>
+                <option value="reader">Reader</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="my-4">Already registered? <a href="/login">Log in!</a></label>
+          <label class="mb-4">By clicking 'Sign in', you agree to our Terms and Conditions</label>
+          <div class="d-grid gap-2"><button type="submit" class="btn btn-outline-primary shadow">Sign in</button></div>
+        </div>
+      </div>
+    </form>
+    <!-- register form -->
+
+    <%- include('includes/footer.html'); -%>
+    <%- include('includes/cookie.html'); -%>
+  </body>
+  <script src="/js/utility.js"></script>
+</html>

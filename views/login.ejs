@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">    
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="stylesheet" href="/css/icons.css">
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Login Page">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+
+    <%- include('includes/navbar.ejs'); -%>
+
+    <!-- login form-->
+    <form id="loginForm" class="text-center my-5 text-light" onsubmit="sendXhrForm('loginForm', 'loginFailed', '/login', '/');" action="javascript:void(0);">
+      <div class="card p-4 mx-auto bg-customblue max-width-450px">
+        <div class="card-header text-center font-weight-bold">
+          <h5>Login to Hackerfill</h5>
+        </div>
+        <div class="card-body">
+          <div id="loginFailed" class="alert alert-danger d-none" role="alert"></div>
+          <label>Enter your username and password to log in.</label>
+          <div class="input-group my-5">
+            <div id="usernamebox" class="input-group-text boxcustom"></div>
+            <input type="text" name="username" class="form-control" placeholder="Username" required>
+          </div>
+          <div class="input-group">
+            <div id="passwordbox" class="input-group-text boxcustom"></div>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+          </div>
+          <label class="my-4">Not already registered? <a href="/register">Sign in</a></label>
+          <div class="d-grid gap-2!"><button type="submit" class="btn btn-outline-primary shadow">Log in</button></div>
+        </div>
+      </div>
+    </form>
+    <!-- login form-->
+      
+    <%- include('includes/footer.html'); -%>
+    <%- include('includes/cookie.html'); -%>
+    </body>
+    <script src="/js/utility.js"></script>
+</html>

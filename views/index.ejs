@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+  <head>
+    <title>Hackerfill</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/utility.css">
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png"/>
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Main Page">
+  </head>
+
+  <body class="d-flex flex-column h-100">
+      <div>
+        <%- include('includes/navbar.ejs'); -%>
+
+        <!-- dashboard image-->
+        <div id="dashboardimg">
+          <h1 class="max-width-500px colorgreen text-center display-1 mx-auto p-5">A Massive Hacking Container</h1>
+        </div>
+        <!-- dashboard image-->
+
+        <!-- articles panel-->
+        <% if(params.logged && params.user.role == 'advertiser') { %>
+        <div class="custom-center-div mt-5">
+          <h1 class="pb-2 border-bottom">Write your article! What are you waiting for?</h1>
+          <p class="colorlight">Press the button below to write an article, it's very simple, follow if instructions and spread your knowledge!</p>
+          <a href="/articles/new" class="btn btn-outline-success">Write now an article</a>
+        </div>
+        <% } %>
+        <div class="custom-center-div mt-5">
+          <h1 class="pb-2 border-bottom">Read an article!</h1>
+          <p class="colorlight">Press the button below to search for the item that's right for you!</p>
+          <a href="/articles" class="btn btn-outline-success me-2 mb-2">Read now</a>
+          <a href="/public" class="btn btn-outline-success me-2 mb-2">Find a user</a>
+        </div>
+        <!-- articles panel-->
+
+        <!-- features-->
+        <div class="container mt-5 custom-center-div" id="hanging-icons">
+          <h1 class="pb-2 border-bottom">Features</h1>
+          <div class="row py-3">
+            <div class="col-md-4 d-flex align-items-start">
+              <div class="flex-shrink-0 me-3">
+                <i class="fas fa-eye fa-3x colorgreen width-50px"></i>
+              </div>
+              <div>
+                <h2>Cyber security</h2>
+                <p class="colorlight">Cyber security is the practice of defending computers, servers, mobile devices, electronic systems, networks, and data from malicious attacks.</p>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-start">
+              <div class="flex-shrink-0 me-3">
+                <i class="fas fa-fingerprint fa-3x colorgreen width-50px"></i>
+              </div>
+              <div>
+                <h2>Fingerprint</h2>
+                <p class="colorlight">Fingerprints in the digital world are similar to what human fingerprints are in the real world. Is a group of information that can be used to detect software or hardware devices.</p>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-start">
+              <div class="flex-shrink-0 me-3">
+                <i class="fas fa-shield-alt fa-3x colorgreen width-50px"></i>
+              </div>
+              <div>
+                <h2>Shield</h2>
+                <p class="colorlight">Security Shield is an industry-first security suite that empowers small and medium-sized businesses to quickly take control of their business identity protection.</p>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 d-flex align-items-start">
+              <div class="flex-shrink-0 me-3">
+                <i class="fas fa-eye-slash fa-3x colorgreen width-50px"></i>
+              </div>
+              <div>
+                <h2>Vpn</h2>
+                <p class="colorlight">A VPN hides your IP address by letting the network redirect it through a specially configured remote server run by a VPN host.</p>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-start">
+              <div class="flex-shrink-0 me-3">
+                <i class="fas fa-mask fa-3x colorgreen width-50px"></i>
+              </div>
+              <div>
+                <h2>Proxy</h2>
+                <p class="colorlight">A proxy server acts as a gateway between you and the internet. It's an intermediary server separating end users from the websites they browse.</p>
+              </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-start">
+              <div class="flex-shrink-0 me-3">
+                <i class="fas fa-user-secret fa-3x colorgreen width-50px"></i>
+              </div>
+              <div>
+                <h2>Tor</h2>
+                <p class="colorlight">The Tor project is a non-profit organisation that conducts research and development into online privacy and anonymity.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- features -->
+
+        <!-- svg -->
+        <section id="indexSvg">
+          <svg viewBox="0 0 1440 198">
+            <path fill="#151d2b" fill-opacity="1" d="M0,64L40,96C80,128,160,192,240,197.3C320,203,400,149,480,112C560,75,640,53,720,74.7C800,96,880,160,960,176C1040,192,1120,160,1200,149.3C1280,139,1360,149,1400,154.7L1440,160L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z"></path>
+          </svg>
+          <svg viewBox="0 0 1440 198">
+            <path fill="#151d2b" fill-opacity="1" d="M0,64L40,96C80,128,160,192,240,197.3C320,203,400,149,480,112C560,75,640,53,720,74.7C800,96,880,160,960,176C1040,192,1120,160,1200,149.3C1280,139,1360,149,1400,154.7L1440,160L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path>
+          </svg>
+        </section>
+        <!-- svg -->
+
+        <!-- leaderboard -->
+        <div class="custom-center-div my-5">
+          <h1 class="pb-2 border-bottom mb-5">Leaderboard</h1>
+          <div id="leaderboard" class="mx-auto max-width-800px">
+            <canvas id="leaderboardCanvas"></canvas>
+          </div>
+          <!---->
+          <a class="btn btn-outline-success mt-3 me-2" data-bs-toggle="collapse" href="#collapseLeaderbord" role="button" aria-expanded="false" aria-controls="collapseSearch">See the list</a>
+          <div class="collapse multi-collapse mt-3" id="collapseLeaderbord">
+            <div class="card bg-customblue p-3">
+              <div class="card-body">
+                <p class="lead">Here is the list of top rated articles, you will be able to access the article and the creator's profile.</p>
+                <ul id="ul_leaderboard">
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!---->
+        </div>
+        <!-- leaderboard -->
+
+        <!-- carousel -->
+        <div class="custom-center-div my-5">
+          <h1 class="pb-2 border-bottom mb-5">How does this site work?</h1>
+          <div id="carousel" class="carousel slide mx-auto max-width-800px" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <img src="/img/carousel/1.png" class="d-block rounded-3 img-fluid" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="/img/carousel/2.png" class="d-block rounded-3 img-fluid" alt="...">
+              </div>
+              <div class="carousel-item">
+                <img src="/img/carousel/3.png" class="d-block rounded-3 img-fluid" alt="...">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+        <!-- carousel -->
+
+      </div>
+      <%- include('includes/footer.html'); -%>
+      <%- include('includes/cookie.html'); -%>
+  </body>
+  <script src="/js/fontawesome.js"></script>
+  <script src="/js/chart.js"></script>
+  <script src="/js/leaderboard.js"></script>
+</html>

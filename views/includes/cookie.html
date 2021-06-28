@@ -1,0 +1,40 @@
+<div class="modal fade" id="consentCookie" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content bg-customblue border-0">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 text-center" id="loginForm">
+            <img src="/img/cookie.png" class="w-50">
+            <h3>We use cookies to improve your experience</h3>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" onclick="setConsent();" class="btn btn-primary w-100 border-0 p-3" data-bs-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const cookieModal = new bootstrap.Modal(document.getElementById('consentCookie'), {backdrop: 'static'});
+
+  function setConsent() {
+    document.cookie='consent=1; path=/'
+  }
+
+  function getCookie(name) {
+    var cookieArr = document.cookie.split(";");
+    for(var i = 0; i < cookieArr.length; i++) {
+      var cookiePair = cookieArr[i].split("=");
+      if(name == cookiePair[0].trim()) {
+        return decodeURIComponent(cookiePair[1]);
+      }
+    }
+    return null;
+  }
+
+  if(getCookie('consent') != 1) {
+    cookieModal.show();
+  }
+</script>
