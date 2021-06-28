@@ -1,0 +1,28 @@
+{
+  "name": "hackerfill",
+  "version": "1.0.0",
+  "description": "This project was developed for a school project at Eastern Piedmont University during the web programming course.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": {
+    "name": "LukeAz"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/LukeAz/Hackerfill.git"
+  },
+  "dependencies": {
+    "argon2": "^0.28.1",
+    "axios": "^0.21.1",
+    "cookie-parser": "^1.4.5",
+    "csurf": "^1.11.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
+    "sqlite3": "^5.0.2"
+  }
+}
