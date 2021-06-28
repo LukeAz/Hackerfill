@@ -1,0 +1,42 @@
+.boxcustom {
+    display: block;
+    height: 40px;
+    width: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px;
+}   
+
+#usernamebox {
+    background-image: url('/img/icons/username.png');
+}
+
+#emailbox {
+    background-image: url('/img/icons/email.png');
+}
+
+#passwordbox {
+    background-image: url('/img/icons/password.png');
+}
+
+#rolebox {
+    background-image: url('/img/icons/role.png');
+}
+
+#penbox {
+    background-image: url('/img/icons/pen.png');
+}
+
+#pencilbox {
+    background-image: url('/img/icons/pencil.png');
+}
+
+#picturebox {
+    background-image: url('/img/icons/picture.png');
+}
+
+.form-control:focus {
+    outline: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

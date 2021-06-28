@@ -1,0 +1,11 @@
+.navbackgound {
+    background-color: #171616;
+}
+
+#logo {
+    display: block;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 180px;
+}
