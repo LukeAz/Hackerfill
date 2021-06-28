@@ -1,0 +1,8 @@
+{
+    "PORT": 3000,
+    "argon2i": {
+        "timeCost": 14,
+        "memoryCost": 65536,
+        "parallelism": 8
+    }
+}
