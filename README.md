@@ -1,6 +1,8 @@
 ![alt logo](https://github.com/LukeAz/Hackerfill/blob/main/docs/logo.png)
 # Hackerfill
 Web programming school project. Hackerfill is a platform that provides a collection of articles regarding cybersecurity. 
+This project can be viewed at https://hackerfill.lukeaz.ml
+In case of abuse or malfunction contact me on the email indicated in the profile.
 
 ## General info
 This project was developed for a school project at Eastern Piedmont University during the web programming course.
